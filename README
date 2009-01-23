@@ -1,0 +1,19 @@
+css_parser
+==========
+
+  hpricot helper that scrapes html easily by parser class defined css selector
+
+
+Example
+=======
+
+  class UserParser < CssParser
+    css :name, "div#contents span.name"
+    css :age , "div#contents span.age"
+  end
+
+  parser = UserParser.file('user.html')
+  User.new parser.attributes
+
+
+Copyright (c) 2008 maiha@wota.jp, released under the MIT license
