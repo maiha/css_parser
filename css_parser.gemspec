@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.date = %q{2009-01-23}
   s.description = %q{hpricot helper that scrapes html easily by parser class defined css selector}
   s.email = %q{maiha@wota.jp}
-  s.extra_rdoc_files = ["README", "LICENSE", "TODO"]
-  s.files = ["LICENSE", "README", "Rakefile", "TODO", "lib/css_parser.rb", "spec/spec_helper.rb", "spec/css_parser_spec.rb"]
+  s.extra_rdoc_files = ["README", "LICENSE"]
+  s.files = ["LICENSE", "README", "Rakefile", "lib/css_parser.rb", "spec/spec_helper.rb", "spec/css_parser_spec.rb"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/maiha/css_parser}
   s.require_paths = ["lib"]

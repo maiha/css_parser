@@ -6,7 +6,7 @@ AUTHOR = "maiha"
 EMAIL = "maiha@wota.jp"
 HOMEPAGE = "http://github.com/maiha/css_parser"
 SUMMARY = "hpricot helper that scrapes html easily by parser class defined css selector"
-GEM_VERSION = "0.1"
+GEM_VERSION = "0.1.1"
 
 spec = Gem::Specification.new do |s|
 #  s.rubyforge_project = 'merb'
@@ -14,7 +14,7 @@ spec = Gem::Specification.new do |s|
   s.version = GEM_VERSION
   s.platform = Gem::Platform::RUBY
   s.has_rdoc = true
-  s.extra_rdoc_files = ["README", "LICENSE", 'TODO']
+  s.extra_rdoc_files = ["README", "LICENSE"]
   s.summary = SUMMARY
   s.description = s.summary
   s.author = AUTHOR
@@ -23,7 +23,7 @@ spec = Gem::Specification.new do |s|
   s.add_dependency('hpricot', '>= 0.1')
   s.add_dependency('dsl_accessor', '>= 0.1')
   s.require_path = 'lib'
-  s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,spec,app,public,stubs}/**/*")
+  s.files = %w(LICENSE README Rakefile) + Dir.glob("{lib,spec,app,public,stubs}/**/*")
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
