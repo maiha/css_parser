@@ -6,7 +6,7 @@ AUTHOR = "maiha"
 EMAIL = "maiha@wota.jp"
 HOMEPAGE = "http://github.com/maiha/css_parser"
 SUMMARY = "hpricot helper that scrapes html easily by parser class defined css selector"
-GEM_VERSION = "0.1.1"
+GEM_VERSION = "0.1.2"
 
 spec = Gem::Specification.new do |s|
 #  s.rubyforge_project = 'merb'
@@ -21,7 +21,7 @@ spec = Gem::Specification.new do |s|
   s.email = EMAIL
   s.homepage = HOMEPAGE
   s.add_dependency('hpricot', '>= 0.1')
-  s.add_dependency('dsl_accessor', '>= 0.1')
+  s.add_dependency('maiha-dsl_accessor', '>= 0.2.2')
   s.require_path = 'lib'
   s.files = %w(LICENSE README Rakefile) + Dir.glob("{lib,spec,app,public,stubs}/**/*")
 end
