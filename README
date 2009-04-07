@@ -16,4 +16,35 @@ Example
   User.new parser.attributes
 
 
+Formatter
+=========
+
+"css" accepts :as option to specify output format.
+Let's consider following html.
+
+  <span class=name>
+    Maiha
+    <span class=nick>(maiha)</span>
+  </span>
+
+When the case of :html formatter, this is in default.
+
+  class UserParser < CssParser
+    css :name, "span.name"
+  end
+
+  UserParser.new(html).name
+  # => "Maiha\n<span class=\"nick\">(maiha)</span>"
+
+When the case of :text formatter.
+
+  class UserParser < CssParser
+    css :name, "span.name", :as=>:text
+  end
+
+  UserParser.new(html).name
+  # => "Maiha\n    (maiha)"
+
+
+
 Copyright (c) 2008 maiha@wota.jp, released under the MIT license

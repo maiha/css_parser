@@ -60,6 +60,33 @@ describe CssParser do
       foo.name.should == "maiha"
     end
 
+    it "should return inner html in default" do
+      class CssParser
+        css :foo, "div"
+      end
+
+      foo = CssParser.new('<div><span>a</span></div>')
+      foo.foo.should == "<span>a</span>"
+    end
+
+    it "should return inner html with :html format" do
+      class CssParser
+        css :foo, "div", :as=>:html
+      end
+
+      foo = CssParser.new('<div><span>a</span></div>')
+      foo.foo.should == "<span>a</span>"
+    end
+
+    it "should return inner text with :text format" do
+      class CssParser
+        css :foo, "div", :as=>:text
+      end
+
+      foo = CssParser.new('<div><span>a</span></div>')
+      foo.foo.should == "a"
+    end
+
     it "should define instance method as module" do
       class CssParser
         css :foo, "div"

@@ -10,7 +10,56 @@ class CssParser
   ######################################################################
   ### Exceptions
 
-  class ReservedCss < StandardError; end
+  class ReservedCss   < StandardError; end
+  class InvalidFormat < StandardError; end
+
+  ######################################################################
+  ### StoredCss
+
+  StoredCss = Struct.new(:key, :pattern, :options)
+  class StoredCss
+    def formatter
+      Formatter.guess(options[:as])
+    end
+  end
+
+  ######################################################################
+  ### Formatters
+
+  module Formatter
+    def self.guess(type)
+      name = type.to_s.capitalize
+      if name.empty?
+        Base
+      else
+        Formatter.const_get(name)
+      end
+    rescue
+      raise InvalidFormat, type.inspect
+    end
+
+    class Base
+      def initialize(element)
+        @element = element
+      end
+
+      def execute
+        raise NotImplementedError, "subclass responsibility"
+      end
+    end
+
+    class Html < Base
+      def execute
+        @element.inner_html
+      end
+    end
+
+    class Text < Base
+      def execute
+        @element.inner_text
+      end
+    end
+  end
 
   ######################################################################
   ### InstanceMethods
@@ -37,10 +86,11 @@ class CssParser
     new(html, file)
   end
 
-  def self.css(key, pattern)
+  def self.css(key, pattern, options = {})
     key = key.to_s.intern
+    options[:as] ||= :html
     guard_from_overridden(key)
-    define_css(key, pattern)
+    define_css(key, pattern, options)
   end
 
   private
@@ -53,19 +103,22 @@ class CssParser
       @my_stored_css ||= (stored_css.dup rescue stored_css)
     end
 
-    def self.define_css(key, pattern)
-      # not defined yet
+    def self.define_css(key, pattern, options)
+      stored = StoredCss.new(key, pattern, options)
+
+      # when the instance method is not defined yet
       unless instance_methods.include?(key.to_s)
         css_module.module_eval do
           define_method(key) do
-            pattern = self.class.my_stored_css[key]
-            element = parser.search(pattern).first
-            element ? element.inner_html : nil
+            stored  = self.class.my_stored_css[key]
+            element = parser.search(stored.pattern).first
+            element ? stored.formatter.new(element).execute : nil
           end
         end
       end
 
-      my_stored_css[key] = pattern
+      # update stored
+      my_stored_css[key] = stored
     end
 
     def self.guard_from_overridden(key)

@@ -6,7 +6,7 @@ AUTHOR = "maiha"
 EMAIL = "maiha@wota.jp"
 HOMEPAGE = "http://github.com/maiha/css_parser"
 SUMMARY = "hpricot helper that scrapes html easily by parser class defined css selector"
-GEM_VERSION = "0.1.2"
+GEM_VERSION = "0.2.0"
 
 spec = Gem::Specification.new do |s|
 #  s.rubyforge_project = 'merb'
