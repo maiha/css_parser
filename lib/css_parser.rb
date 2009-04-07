@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'dsl_accessor'
 require 'hpricot'
+require 'nkf'
+require 'pathname'
 
 class CssParser
   dsl_accessor :stored_css, proc{{}}
@@ -24,7 +26,7 @@ class CssParser
 
   def attributes(keys = nil)
     keys ||= self.class.my_stored_css.keys
-    keys.inject({}){|h,key| h[key] = send(key); h}
+    keys.inject({}){|h,key| h[key] = __send__(key); h}
   end
 
   ######################################################################
@@ -70,7 +72,7 @@ class CssParser
       return if my_stored_css.has_key?(key)
 
       if instance_methods(true).include?(key.to_s)
-        raise ReservedCss, "#{key} is reserved for #{self.to_s.classify}##{key}"
+        raise ReservedCss, "#{key} is reserved for #{self.to_s}##{key}"
       end
       if %w( attributes parser ).include?(key.to_s)
         raise ReservedCss, "#{key} is reserved for CssParser module"
